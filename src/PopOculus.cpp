@@ -16,14 +16,15 @@
 
 
 
-TPopOpengl::TPopOpengl()
+TPopOculus::TPopOculus()
 {
-	AddJobHandler("exit", TParameterTraits(), *this, &TPopOpengl::OnExit );
+	AddJobHandler("exit", TParameterTraits(), *this, &TPopOculus::OnExit );
 
-	AddJobHandler("maketesttexture", TParameterTraits(), *this, &TPopOpengl::OnMakeTestTexture );
+	AddJobHandler("list", TParameterTraits(), *this, &TPopOculus::OnListDevices );
+	AddJobHandler("oculusversion", TParameterTraits(), *this, &TPopOculus::OnOculusVersion );
 }
 
-void TPopOpengl::AddChannel(std::shared_ptr<TChannel> Channel)
+void TPopOculus::AddChannel(std::shared_ptr<TChannel> Channel)
 {
 	TChannelManager::AddChannel( Channel );
 	if ( !Channel )
@@ -32,7 +33,7 @@ void TPopOpengl::AddChannel(std::shared_ptr<TChannel> Channel)
 }
 
 
-void TPopOpengl::OnExit(TJobAndChannel& JobAndChannel)
+void TPopOculus::OnExit(TJobAndChannel& JobAndChannel)
 {
 	mConsoleApp.Exit();
 	
@@ -44,17 +45,35 @@ void TPopOpengl::OnExit(TJobAndChannel& JobAndChannel)
 }
 
 
-void TPopOpengl::OnMakeTestTexture(TJobAndChannel& JobAndChannel)
+void TPopOculus::OnOculusVersion(TJobAndChannel& JobAndChannel)
 {
-	std::stringstream Error;
-	SoyPixels TestTexture;
-	
 	TJobReply Reply( JobAndChannel );
+	
+	auto Version = mOculus.GetVersion();
+	
+	Reply.mParams.AddDefaultParam( Version );
+	
+	TChannel& Channel = JobAndChannel;
+	Channel.OnJobCompleted( Reply );
+}
+
+void TPopOculus::OnListDevices(TJobAndChannel& JobAndChannel)
+{
+	TJobReply Reply( JobAndChannel );
+
+	//	get devices
+	std::stringstream Error;
+	Array<THmdMeta> Metas;
+	mOculus.GetDevices( GetArrayBridge(Metas), Error );
 
 	if ( !Error.str().empty() )
 		Reply.mParams.AddErrorParam( Error.str() );
 	
-	Reply.mParams.AddDefaultParam( TestTexture );
+	std::stringstream Output;
+	for ( int i=0;	i<Metas.GetSize();	i++ )
+		Output << ((i>0)?";":"") << Metas[i];
+	
+	Reply.mParams.AddDefaultParam( Output.str() );
 	
 	TChannel& Channel = JobAndChannel;
 	Channel.OnJobCompleted( Reply );
@@ -71,7 +90,7 @@ TPopAppError::Type PopMain(TJobParams& Params)
 {
 	std::cout << Params << std::endl;
 	
-	TPopOpengl App;
+	TPopOculus App;
 
 	auto CommandLineChannel = std::shared_ptr<TChan<TChannelLiteral,TProtocolCli>>( new TChan<TChannelLiteral,TProtocolCli>( SoyRef("cmdline") ) );
 	

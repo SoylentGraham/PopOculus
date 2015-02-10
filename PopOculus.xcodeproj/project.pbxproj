@@ -62,6 +62,11 @@
 		FB8A07171A2E6BBF0099596C /* sha1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB8A07151A2E6BBF0099596C /* sha1.cpp */; };
 		FB8A071A1A2E6C3E0099596C /* PopOculus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB8A07181A2E6C3E0099596C /* PopOculus.cpp */; };
 		FB9C89AD1A8A578500931EFB /* libovr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FB9C89AC1A8A578500931EFB /* libovr.a */; };
+		FB9C89B01A8A598300931EFB /* SoyHmd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB9C89AE1A8A598300931EFB /* SoyHmd.cpp */; };
+		FB9C89B21A8A62CE00931EFB /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB9C89B11A8A62CE00931EFB /* OpenGL.framework */; };
+		FB9C89B61A8A63EE00931EFB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB9C89B51A8A63EE00931EFB /* Cocoa.framework */; };
+		FB9C89B81A8A63F700931EFB /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB9C89B71A8A63F700931EFB /* IOKit.framework */; };
+		FB9C89BA1A8A63FE00931EFB /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB9C89B91A8A63FE00931EFB /* CoreData.framework */; };
 		FBC3A0E11A308648009DA49E /* SoyScope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FBC3A0DF1A308648009DA49E /* SoyScope.cpp */; };
 /* End PBXBuildFile section */
 
@@ -204,6 +209,12 @@
 		FB9C89981A82D2A700931EFB /* RemoteArray.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RemoteArray.h; path = src/RemoteArray.h; sourceTree = "<group>"; };
 		FB9C89AB1A8A55FC00931EFB /* OculusSDK */ = {isa = PBXFileReference; lastKnownFileType = folder; name = OculusSDK; path = ../OculusSDK; sourceTree = "<group>"; };
 		FB9C89AC1A8A578500931EFB /* libovr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libovr.a; path = /Volumes/Code/OculusSDK/LibOVR/Projects/Mac/Xcode/../../../Lib/Mac/Debug/libovr.a; sourceTree = "<absolute>"; };
+		FB9C89AE1A8A598300931EFB /* SoyHmd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoyHmd.cpp; path = src/SoyHmd.cpp; sourceTree = SOURCE_ROOT; };
+		FB9C89AF1A8A598300931EFB /* SoyHmd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoyHmd.h; path = src/SoyHmd.h; sourceTree = SOURCE_ROOT; };
+		FB9C89B11A8A62CE00931EFB /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		FB9C89B51A8A63EE00931EFB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		FB9C89B71A8A63F700931EFB /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		FB9C89B91A8A63FE00931EFB /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		FBC3A0DF1A308648009DA49E /* SoyScope.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoyScope.cpp; path = ../ofxSoylent/src/SoyScope.cpp; sourceTree = "<group>"; };
 		FBC3A0E01A308648009DA49E /* SoyScope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoyScope.h; path = ../ofxSoylent/src/SoyScope.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -213,6 +224,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB9C89BA1A8A63FE00931EFB /* CoreData.framework in Frameworks */,
+				FB9C89B81A8A63F700931EFB /* IOKit.framework in Frameworks */,
+				FB9C89B61A8A63EE00931EFB /* Cocoa.framework in Frameworks */,
+				FB9C89B21A8A62CE00931EFB /* OpenGL.framework in Frameworks */,
 				FB9C89AD1A8A578500931EFB /* libovr.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -231,6 +246,10 @@
 		FB8A058A1A2E54730099596C = {
 			isa = PBXGroup;
 			children = (
+				FB9C89B91A8A63FE00931EFB /* CoreData.framework */,
+				FB9C89B71A8A63F700931EFB /* IOKit.framework */,
+				FB9C89B51A8A63EE00931EFB /* Cocoa.framework */,
+				FB9C89B11A8A62CE00931EFB /* OpenGL.framework */,
 				FB9C89AC1A8A578500931EFB /* libovr.a */,
 				FB9C89AB1A8A55FC00931EFB /* OculusSDK */,
 				FB9C89AA1A8A555F00931EFB /* OculusSDK */,
@@ -253,6 +272,8 @@
 		FB8A05951A2E54730099596C /* src */ = {
 			isa = PBXGroup;
 			children = (
+				FB9C89AE1A8A598300931EFB /* SoyHmd.cpp */,
+				FB9C89AF1A8A598300931EFB /* SoyHmd.h */,
 				FB8A07181A2E6C3E0099596C /* PopOculus.cpp */,
 				FB8A07191A2E6C3E0099596C /* PopOculus.h */,
 			);
@@ -509,6 +530,7 @@
 				FB8A06991A2E6AB50099596C /* TProtocolHttp.cpp in Sources */,
 				FB8A06A51A2E6AF80099596C /* TChannel.cpp in Sources */,
 				FB8A070E1A2E6B520099596C /* TimeConstraint.cpp in Sources */,
+				FB9C89B01A8A598300931EFB /* SoyHmd.cpp in Sources */,
 				FB8A06A81A2E6AF80099596C /* TChannelSocket.cpp in Sources */,
 				FB8A06561A2E5A7C0099596C /* SoyEvent.cpp in Sources */,
 				FB8A06981A2E6AB50099596C /* TProtocolCli.cpp in Sources */,
@@ -631,7 +653,7 @@
 					"$(OCULUS_DIR)/Lib/Mac/Release",
 					/Volumes/Code/OculusSDK/LibOVR/Projects/Mac/Xcode/../../../Lib/Mac/Debug,
 				);
-				OCULUS_DIR = /Volumes/Code/OculusSDK;
+				OCULUS_DIR = /Volumes/Code/OculusSDK/LibOVR;
 				PRODUCT_NAME = PopOculus;
 			};
 			name = Debug;
@@ -651,7 +673,7 @@
 					"$(OCULUS_DIR)/Lib/Mac/Release",
 					/Volumes/Code/OculusSDK/LibOVR/Projects/Mac/Xcode/../../../Lib/Mac/Debug,
 				);
-				OCULUS_DIR = /Volumes/Code/OculusSDK;
+				OCULUS_DIR = /Volumes/Code/OculusSDK/LibOVR;
 				PRODUCT_NAME = PopOculus;
 			};
 			name = Release;
