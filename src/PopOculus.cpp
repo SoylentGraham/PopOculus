@@ -16,7 +16,8 @@
 
 
 
-TPopOculus::TPopOculus()
+TPopOculus::TPopOculus() :
+	TJobHandler	( static_cast<TChannelManager&>(*this) )
 {
 	AddJobHandler("exit", TParameterTraits(), *this, &TPopOculus::OnExit );
 
