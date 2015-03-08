@@ -3,12 +3,12 @@
 
 
 
-THmdMeta GetMeta(ovrHmd Hmd,std::stringstream&& DebugSerial)
+THmdMeta GetMeta(ovrHmd Hmd,const std::string& DebugSerial)
 {
 	THmdMeta Meta;
 	
 	//	use debug serial in case it doesn't exist
-	Meta.mSerial = DebugSerial.str();
+	Meta.mSerial = DebugSerial;
 	Meta.mConnected = (Hmd != nullptr);
 	
 	//	no more info to supply
@@ -16,7 +16,11 @@ THmdMeta GetMeta(ovrHmd Hmd,std::stringstream&& DebugSerial)
 		return Meta;
 	
 	auto& hmd = *Hmd;
-	Meta.mSerial = std::string( hmd.SerialNumber );
+
+	//	use serial number if supplied
+	if ( hmd.SerialNumber[0] != '\0' )
+		Meta.mSerial = std::string( hmd.SerialNumber );
+
 	Meta.mResolution = vec2f( hmd.Resolution.w, hmd.Resolution.h );
 	Meta.mWindowPosition = vec2f( hmd.WindowsPos.x, hmd.WindowsPos.y );
 	Meta.mProductName = hmd.ProductName;
@@ -26,6 +30,11 @@ THmdMeta GetMeta(ovrHmd Hmd,std::stringstream&& DebugSerial)
 	Meta.mHasDriftCorrection = (hmd.HmdCaps & ovrTrackingCap_MagYawCorrection);
 
 	return Meta;
+}
+
+THmdMeta GetMeta(ovrHmd Hmd,std::stringstream&& DebugSerial)
+{
+	return GetMeta( Hmd, DebugSerial.str() );
 }
 
 
@@ -82,23 +91,31 @@ void OvrDeviceManager::GetDevices(ArrayBridge<THmdMeta>&& Metas,std::stringstrea
 		//	create a meta for each one it said it had, even if it's disapeared now
 		auto Hmd = ovrHmd_Create(i);
 		auto Meta = GetMeta( Hmd, std::stringstream() << "ovr" << i );
+
+		if ( Meta.IsValid() )
+			Metas.PushBack( Meta );
 		
 		if ( Hmd )
 			ovrHmd_Destroy( Hmd );
 	}
 	
 	//	always add the debug one
-	BufferArray<ovrHmdType,10> DebugHmdTypes;
-	DebugHmdTypes.PushBack( ovrHmd_None );
-	DebugHmdTypes.PushBack( ovrHmd_DK1 );
-	DebugHmdTypes.PushBack( ovrHmd_DKHD );
-	DebugHmdTypes.PushBack( ovrHmd_DK2 );
-	DebugHmdTypes.PushBack( ovrHmd_Other );
+	BufferArray<std::tuple<std::string,ovrHmdType>,10> DebugHmdTypes;
+//	DebugHmdTypes.PushBack( std::make_tuple("ovrHmd_None",ovrHmd_None) );
+	DebugHmdTypes.PushBack( std::make_tuple("ovrHmd_DK1",ovrHmd_DK1) );
+	DebugHmdTypes.PushBack( std::make_tuple("ovrHmd_DKHD",ovrHmd_DKHD) );
+	DebugHmdTypes.PushBack( std::make_tuple("ovrHmd_DK2",ovrHmd_DK2) );
+	DebugHmdTypes.PushBack( std::make_tuple("ovrHmd_Other",ovrHmd_Other) );
 	for ( int i=0;	i<DebugHmdTypes.GetSize();	i++ )
 	{
-		auto Hmd = ovrHmd_CreateDebug(DebugHmdTypes[i]);
-		auto Meta = GetMeta( Hmd, std::stringstream() << "ovrdebug" << i );
+		auto& HmdTypeName = std::get<0>( DebugHmdTypes[i] );
+		auto& HmdType = std::get<1>( DebugHmdTypes[i] );
+		auto Hmd = ovrHmd_CreateDebug( HmdType );
+		auto Meta = GetMeta( Hmd, HmdTypeName );
 		
+		if ( Meta.IsValid() )
+			Metas.PushBack( Meta );
+	
 		if ( Hmd )
 			ovrHmd_Destroy( Hmd );
 	}
